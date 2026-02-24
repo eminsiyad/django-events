@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ event.title }}</h2>
+
+<div class="box">
+    <p><strong>Description:</strong> {{ event.description }}</p>
+    <p><strong>Date:</strong> {{ event.date }}</p>
+    <p><strong>Max Participants:</strong> {{ event.max_participants }}</p>
+    <p><strong>Registered:</strong> {{ event.registration_set.count }}</p>
+</div>
+
+{% if user.is_authenticated %}
+    <form method="post" action="{% url 'register_event' event.id %}">
+        {% csrf_token %}
+        <button type="submit">Register for this Event</button>
+    </form>
+{% else %}
+    <p>Please <a href="{% url 'login' %}">login</a> to register.</p>
+{% endif %}
+
+{% endblock %}

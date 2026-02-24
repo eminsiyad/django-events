@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>My Registered Events</h2>
+
+{% for registration in registrations %}
+    <div class="box">
+        <h3>{{ registration.event.title }}</h3>
+        <p>Date: {{ registration.event.date }}</p>
+        <p>Registered On: {{ registration.registered_at }}</p>
+    </div>
+{% empty %}
+    <p>You have not registered for any events yet.</p>
+{% endfor %}
+
+{% endblock %}
