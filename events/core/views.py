@@ -3,6 +3,7 @@ from .models import Event, Registration
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from.forms import EventForm
 from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
@@ -43,3 +44,15 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form':form})
+
+@login_required
+def create_event(request):
+    if request.method == "POST":
+        form = EventForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('event_list')
+    else:
+        form = EventForm()
+    return render(request, 'create_event.html', {'form': form})
+
